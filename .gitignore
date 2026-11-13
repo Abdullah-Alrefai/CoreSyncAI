@@ -1,3 +1,21 @@
-*.db
-.env
+# Environments
+.venv/
 __pycache__/
+*.pyc
+.pytest_cache/
+
+# Secrets (API keys)
+.env
+.streamlit/secrets.toml
+
+# Local databases (personal data)
+*.db
+*.db-journal
+
+# Personal Claude Code settings
+.claude/settings.local.json
+
+# Editors / OS
+.idea/
+Thumbs.db
+.DS_Store
