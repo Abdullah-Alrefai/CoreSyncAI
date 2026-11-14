@@ -7,6 +7,9 @@ import streamlit as st
 
 from core.db import init_db
 from ui.auth_page import render_auth_page
+from ui.dashboard_page import render_dashboard
+from ui.placeholder import placeholder_page
+from ui.profile_page import render_profile_page
 
 st.set_page_config(page_title="CoreSync AI", page_icon="💪", layout="wide")
 
@@ -21,16 +24,28 @@ def _startup() -> bool:
 _startup()
 
 if st.session_state.get("user_id") is None:
-    render_auth_page()
+    # Replace the menu with a single hidden login page, so the signed-in
+    # menu doesn't linger in the sidebar after logging out.
+    st.navigation([st.Page(render_auth_page, title="Log in", icon=":material/login:")],
+                  position="hidden").run()
     st.stop()
 
 
-def home() -> None:
-    st.title(f"Welcome, {st.session_state.username} 👋")
-    st.info(
-        "More features are on the way: dashboard, profile and goals are coming next."
-    )
-
+profile_page = st.Page(render_profile_page, title="Profile & Goals", icon=":material/person:",
+                       url_path="profile")
+pages = [
+    st.Page(lambda: render_dashboard(profile_page), title="Dashboard",
+            icon=":material/dashboard:", url_path="dashboard", default=True),
+    profile_page,
+    st.Page(placeholder_page("Nutrition", "food search, meal diary and nutrition analytics."),
+            title="Nutrition", icon=":material/restaurant:", url_path="nutrition"),
+    st.Page(placeholder_page("Workouts", "workout logging, templates and cardio."),
+            title="Workouts", icon=":material/fitness_center:", url_path="workouts"),
+    st.Page(placeholder_page("Progress", "strength charts, personal records and the body map."),
+            title="Progress", icon=":material/trending_up:", url_path="progress"),
+    st.Page(placeholder_page("AI Coach", "chat with an AI coach that knows your data."),
+            title="AI Coach", icon=":material/smart_toy:", url_path="coach"),
+]
 
 with st.sidebar:
     st.caption(f"Signed in as **{st.session_state.username}**")
@@ -38,4 +53,4 @@ with st.sidebar:
         st.session_state.clear()
         st.rerun()
 
-st.navigation([st.Page(home, title="Home", icon=":material/home:")]).run()
+st.navigation(pages).run()

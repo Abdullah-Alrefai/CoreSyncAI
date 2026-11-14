@@ -1,0 +1,22 @@
+# CoreSync AI theme. Docs: https://docs.streamlit.io/develop/api-reference/configuration/config.toml
+
+[client]
+# Hide the developer menu items (rerun, settings, deploy) from regular users.
+toolbarMode = "minimal"
+
+[theme]
+base = "dark"
+primaryColor = "#3B82F6"            # electric blue accent
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#1A1F2B" # inputs, cards, expanders
+textColor = "#E6E8EC"
+borderColor = "#2A3140"
+showWidgetBorder = true
+baseRadius = "medium"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+headingFontWeights = [700, 600, 600, 600, 600, 600]
+
+[theme.sidebar]
+backgroundColor = "#161B22"
+secondaryBackgroundColor = "#1F2633"
+borderColor = "#2A3140"
